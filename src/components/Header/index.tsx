@@ -7,12 +7,10 @@ import { AiOutlineGithub } from 'react-icons/ai'
 import { useRouter } from 'next/router'
 import { Search } from './Search'
 
-interface HeaderProps {
-    children: React.ReactNode
-}
 
 
-export const Header = ({children}: HeaderProps) => {
+
+export const Header = () => {
 
   const { asPath } = useRouter() 
   
@@ -33,8 +31,9 @@ export const Header = ({children}: HeaderProps) => {
     display:"flex",
     flexDirection: "column",
     w:"100%",
-    maxW:{lg:992,'2xl':1024},
+    maxW:{lg: 992, xl: 1024,'2xl': 1280},
     py:"6",
+    px: {base: 4, lg: 0}
   }
 
   const isWideVersion = useBreakpointValue({

@@ -1,10 +1,22 @@
-import { Header } from '@/components/Header/index'
-import { Main } from '@/components/Main/index'
 import Head from 'next/head'
 import Image from 'next/image'
+import { Main } from '@/components/Main/index'
+import { Box, Button, ButtonProps, Flex, Heading, Stack, Text } from '@chakra-ui/react'
+import Link from 'next/link'
+
 
 
 export default function Home() {
+  const btn: ButtonProps = {
+    bg:"gray.700",
+    color:"gray.100",
+    alignSelf:"flex-start",
+    fontSize:"lg",
+    borderRadius:"10",
+    px:"10",
+    py:"6",
+    _hover:{bg:"gray.900"}
+  }
   return (
     <>
       <Head>
@@ -14,7 +26,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Main>
-        
+        <Flex py="10" alignItems="center" >
+          <Stack spacing="10" >
+            <Box>
+              <Text as="span" fontWeight="light" fontSize="xl">Bem vindo 👋</Text>
+              <Heading as="h1" fontSize="2.25rem" fontWeight="black" maxW="45ch">
+                Leia artigos sobre o universo da Tecnologia e Programação
+                <Text as="strong" fontWeight="black" color="purple.700"> Gratuitamente!</Text>
+              </Heading>
+            </Box>
+
+            <Link href="/articles">
+              <Button {...btn}>
+                Acessar Artigos
+              </Button>
+            </Link>
+            
+          </Stack>
+          <Box display={{base: "none", lg: "block"}} right="0" zIndex="-1">
+            <Image src="/tech.svg" alt="tech" width="882" height="586"/>
+          </Box>
+        </Flex>
       </Main>
     </>
   )
