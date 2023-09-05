@@ -35,7 +35,14 @@ export const Header = () => {
     py:"6",
     px: {base: 4, lg: 0}
   }
-
+  const icon = {
+    color:"gray.700",
+    cursor:"pointer",
+    fontSize:"3xl",
+    transition:"all .15s",
+    transform:"auto",
+    _hover:{scale: 1.05, color:"gray.300"}
+  }
   const isWideVersion = useBreakpointValue({
     base: false,
     md: true,
@@ -50,8 +57,8 @@ export const Header = () => {
           </Flex>
           <Flex gap="4" align="center">
             <Flex gap="2" display={{base:"none", sm: "flex"}}>
-              <Icon color="gray.700" cursor="pointer" fontSize="3xl" transition="all .15s" transform="auto" _hover={{scale: 1.05, color:"gray.300"}} as={RiLinkedinBoxFill}/>
-              <Icon color="gray.700" cursor="pointer" fontSize="3xl" transition="all .15s" transform="auto" _hover={{scale: 1.05, color:"gray.300"}} as={AiOutlineGithub}/>
+              <Icon {...icon} as={RiLinkedinBoxFill}/>
+              <Icon {...icon} as={AiOutlineGithub}/>
             </Flex>
               <Profile />
           </Flex>

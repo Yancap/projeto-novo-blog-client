@@ -1,12 +1,45 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Main } from '@/components/Main/index'
-import { Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react'
+import { Box, Icon, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import { HeaderArticlesPage } from '@/components/ArticlesPage/HeaderArticlesPage'
+import { CardContainer } from '@/components/ArticlesPage/CardContainer'
+import { Card } from '@/components/ArticlesPage/Card'
+import { MdMonitor, MdColorLens } from 'react-icons/md'
+import { TbAtom2Filled } from 'react-icons/tb'
+import { FaMobileAlt } from 'react-icons/fa'
+import { GiArtificialIntelligence, GiServerRack } from 'react-icons/gi'
+import { LuServerCog } from 'react-icons/lu'
 
 
 
 export default function Articles() {
+  const data = [
+    {
+      slug:'teste',
+      category:'front-end',
+      title:'Titulo do artigo sobre o Front-End e suas tecnologias',
+      image:'',
+      created_at:'12 de Janeiro de 2022',
+      author: 'Yan Gabriel'
+    },
+    {
+      slug:'teste',
+      category:'inteligencia artificial',
+      title:'Titulo do artigo sobre o Inteligencia Artificial e seus desafios no mundo moderno ',
+      image:'',
+      created_at:'12 de Janeiro de 2022',
+      author: 'Yan Gabriel'
+    },
+    {
+      slug:'teste',
+      category:'back-end',
+      title:'Titulo do artigo sobre o Back-End e suas tecnologias ',
+      image:'',
+      created_at:'12 de Janeiro de 2022',
+      author: 'Yan Gabriel'
+    }
+  ]
   return (
     <>
       <Head>
@@ -16,7 +49,95 @@ export default function Articles() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Main headerComponent={<HeaderArticlesPage />}>
-        
+        <Stack px="10" spacing="8">
+          <Heading as="h2" fontSize="3rem" fontWeight="black" mb="4">
+              CATEGORIAS
+              <Text as="strong" fontWeight="black" color="purple.700">!</Text>
+          </Heading>
+
+          <Box>
+            <Flex color="purple.300" align="center" gap="2">
+              <Icon as={MdMonitor} fontSize="2.25rem"/>
+              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                FRONT-END
+              </Heading>
+            </Flex>
+            <CardContainer>
+              <Card data={data[0]}/>
+              <Card data={data[0]}/>
+              <Card data={data[0]}/>
+            </CardContainer>
+          </Box>
+
+          <Box>
+            <Flex color="red.500" align="center" gap="2">
+              <Icon as={LuServerCog} fontSize="2.25rem"/>
+              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                  BACK-END
+              </Heading>
+            </Flex>
+            <CardContainer>
+              <Card data={data[2]}/>
+              <Card data={data[2]}/>
+              <Card data={data[2]}/>
+            </CardContainer>
+          </Box>
+
+          <Box>
+            <Flex color="yellow.500" align="center" gap="2">
+              <Icon as={FaMobileAlt} fontSize="2.25rem"/>
+              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                  MOBILE
+              </Heading>
+            </Flex>
+            <CardContainer>
+              <Card data={data[0]}/>
+              <Card data={data[0]}/>
+              <Card data={data[0]}/>
+            </CardContainer>
+          </Box>
+
+          <Box>
+            <Flex color="pink.500" align="center" gap="2">
+              <Icon as={MdColorLens} fontSize="2.5rem"/>
+              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                  UX & UI
+              </Heading>
+            </Flex>
+            <CardContainer>
+              <Card data={data[2]}/>
+              <Card data={data[2]}/>
+              <Card data={data[2]}/>
+            </CardContainer>
+          </Box>
+          <Box>
+            <Flex color="blue.500" align="center" gap="2">
+              <Icon as={GiArtificialIntelligence} fontSize="2.5rem"/>
+              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                  INTELIGENCIA ARTIFICIAL
+              </Heading>
+            </Flex>
+            <CardContainer>
+              <Card data={data[1]}/>
+              <Card data={data[1]}/>
+              <Card data={data[1]}/>
+            </CardContainer>
+          </Box>
+
+          <Box>
+            <Flex color="green.500" align="center" gap="2">
+              <Icon as={TbAtom2Filled} fontSize="2.5rem"/>
+              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                  DATA SCIENCE
+              </Heading>
+            </Flex>
+            <CardContainer>
+              <Card data={data[2]}/>
+              <Card data={data[2]}/>
+              <Card data={data[2]}/>
+            </CardContainer>
+          </Box>
+        </Stack>
       </Main>
     </>
   )

@@ -24,7 +24,7 @@ export const Main = ({children, headerComponent, ...props}: MainProps) => {
     as:"section",
     display:"flex",
     flexDirection: "column",
-    gap:"24",
+    gap:"16",
     justifyContent:"space-between",
     w:"100%",
     maxW:{lg: 992, xl: 1024,'2xl': 1280},
