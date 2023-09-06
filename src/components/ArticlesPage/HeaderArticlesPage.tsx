@@ -32,15 +32,11 @@ export const HeaderArticlesPage = () => {
   ]
   return (
     <Stack px="10" py="4" spacing="4">
-        <Heading as="h1" fontSize="3rem" fontWeight="black">
+        <Heading as="h1" fontSize={{ base: "2.5rem", "2xl":"3rem" }} fontWeight="black">
             ARTIGOS DA SEMANA
             <Text as="strong" fontWeight="black" color="purple.700">!</Text>
         </Heading>
-        <CardContainer>
-          <Card data={data[0]}/>
-          <Card data={data[1]}/>
-          <Card data={data[2]}/>
-        </CardContainer>
+        <CardContainer articles={data} />
     </Stack>
   )
 }

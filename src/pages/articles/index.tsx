@@ -8,38 +8,46 @@ import { Card } from '@/components/ArticlesPage/Card'
 import { MdMonitor, MdColorLens } from 'react-icons/md'
 import { TbAtom2Filled } from 'react-icons/tb'
 import { FaMobileAlt } from 'react-icons/fa'
-import { GiArtificialIntelligence, GiServerRack } from 'react-icons/gi'
+import { GiArtificialIntelligence } from 'react-icons/gi'
 import { LuServerCog } from 'react-icons/lu'
+import { GetServerSideProps } from 'next'
+import { api } from '@/services/api'
+import { useQuery } from "react-query";
 
+export interface ArticlesResponse {
+  slug: string;
+  title: string;
+  subtitle: string;
+  text: string;
+  image: string;
+  category: string;
+  author: string;
+  created_at: string;
+  state: string;
+}
 
 
 export default function Articles() {
-  const data = [
-    {
-      slug:'teste',
-      category:'front-end',
-      title:'Titulo do artigo sobre o Front-End e suas tecnologias',
-      image:'',
-      created_at:'12 de Janeiro de 2022',
-      author: 'Yan Gabriel'
-    },
-    {
-      slug:'teste',
-      category:'inteligencia artificial',
-      title:'Titulo do artigo sobre o Inteligencia Artificial e seus desafios no mundo moderno ',
-      image:'',
-      created_at:'12 de Janeiro de 2022',
-      author: 'Yan Gabriel'
-    },
-    {
-      slug:'teste',
-      category:'back-end',
-      title:'Titulo do artigo sobre o Back-End e suas tecnologias ',
-      image:'',
-      created_at:'12 de Janeiro de 2022',
-      author: 'Yan Gabriel'
+  
+  // TODO: transformar em SSR e criar um Context para isso
+  const {data} = useQuery('articles', async () => {
+    const {data} = await api.get<ArticlesResponse[]>("/articles")
+    const articlesFrontEnd = data.filter(article => article.category === "front-end")
+    const articlesBackEnd = data.filter(article => article.category === "back-end")
+    const articlesMobile = data.filter(article => article.category === "mobile")
+    const articlesUx = data.filter(article => article.category.includes("ux"))
+    const articlesIA = data.filter(article => article.category === "inteligencia artificial")
+    const articlesDataScience = data.filter(article => article.category === "data science")
+
+    return {
+      articlesFrontEnd,
+      articlesBackEnd,
+      articlesMobile,
+      articlesUx,
+      articlesIA,
+      articlesDataScience
     }
-  ]
+  })
   return (
     <>
       <Head>
@@ -50,11 +58,10 @@ export default function Articles() {
       </Head>
       <Main headerComponent={<HeaderArticlesPage />}>
         <Stack px="10" spacing="8">
-          <Heading as="h2" fontSize="3rem" fontWeight="black" mb="4">
+          <Heading as="h2" fontSize={{ base: "2.5rem","2xl":"3rem" }}fontWeight="black" mb="4">
               CATEGORIAS
               <Text as="strong" fontWeight="black" color="purple.700">!</Text>
           </Heading>
-
           <Box>
             <Flex color="purple.300" align="center" gap="2">
               <Icon as={MdMonitor} fontSize="2.25rem"/>
@@ -62,11 +69,7 @@ export default function Articles() {
                 FRONT-END
               </Heading>
             </Flex>
-            <CardContainer>
-              <Card data={data[0]}/>
-              <Card data={data[0]}/>
-              <Card data={data[0]}/>
-            </CardContainer>
+            <CardContainer articles={data?.articlesFrontEnd}/>
           </Box>
 
           <Box>
@@ -76,11 +79,8 @@ export default function Articles() {
                   BACK-END
               </Heading>
             </Flex>
-            <CardContainer>
-              <Card data={data[2]}/>
-              <Card data={data[2]}/>
-              <Card data={data[2]}/>
-            </CardContainer>
+            <CardContainer articles={data?.articlesBackEnd}/>
+
           </Box>
 
           <Box>
@@ -90,11 +90,8 @@ export default function Articles() {
                   MOBILE
               </Heading>
             </Flex>
-            <CardContainer>
-              <Card data={data[0]}/>
-              <Card data={data[0]}/>
-              <Card data={data[0]}/>
-            </CardContainer>
+            <CardContainer articles={data?.articlesMobile}/>
+
           </Box>
 
           <Box>
@@ -104,11 +101,8 @@ export default function Articles() {
                   UX & UI
               </Heading>
             </Flex>
-            <CardContainer>
-              <Card data={data[2]}/>
-              <Card data={data[2]}/>
-              <Card data={data[2]}/>
-            </CardContainer>
+            <CardContainer articles={data?.articlesUx}/>
+
           </Box>
           <Box>
             <Flex color="blue.500" align="center" gap="2">
@@ -117,11 +111,8 @@ export default function Articles() {
                   INTELIGENCIA ARTIFICIAL
               </Heading>
             </Flex>
-            <CardContainer>
-              <Card data={data[1]}/>
-              <Card data={data[1]}/>
-              <Card data={data[1]}/>
-            </CardContainer>
+            <CardContainer articles={data?.articlesIA}/>
+
           </Box>
 
           <Box>
@@ -131,14 +122,19 @@ export default function Articles() {
                   DATA SCIENCE
               </Heading>
             </Flex>
-            <CardContainer>
-              <Card data={data[2]}/>
-              <Card data={data[2]}/>
-              <Card data={data[2]}/>
-            </CardContainer>
+            <CardContainer articles={data?.articlesDataScience}/>
           </Box>
         </Stack>
       </Main>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
+  
+  
+  return {
+    props: {
+    }
+  }
 }

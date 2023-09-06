@@ -6,6 +6,7 @@ import { AiOutlineGithub } from 'react-icons/ai'
 
 import { useRouter } from 'next/router'
 import { Search } from './Search'
+import { Navbar } from './Navbar'
 
 
 
@@ -47,24 +48,29 @@ export const Header = () => {
     base: false,
     md: true,
   })
+
   return (
-    <Flex {...header}>
-      <Container {...container}>
-        <Flex gap="8" w="100%" justify="space-between" align="center">
-          <Flex gap="8"  w="auto">
-            <Image src="/logo.svg" alt='ARTech' width="158" height="30"/>
-            {isWideVersion && <Search />}
-          </Flex>
-          <Flex gap="4" align="center">
-            <Flex gap="2" display={{base:"none", sm: "flex"}}>
-              <Icon {...icon} as={RiLinkedinBoxFill}/>
-              <Icon {...icon} as={AiOutlineGithub}/>
+    <>
+      <Flex {...header}>
+        <Container {...container}>
+          <Flex gap="8" w="100%" justify="space-between" align="center">
+            <Flex gap="8"  w="auto">
+              <Image src="/logo.svg" alt='ARTech' width="158" height="30"/>
+              {isWideVersion && <Search />}
             </Flex>
-              <Profile />
-          </Flex>
-        </Flex>  
-        {!isWideVersion && <Search />}
-      </Container>
-    </Flex>
+            <Flex gap="4" align="center">
+              <Flex gap="2" display={{base:"none", sm: "flex"}}>
+                <Icon {...icon} as={RiLinkedinBoxFill}/>
+                <Icon {...icon} as={AiOutlineGithub}/>
+              </Flex>
+                <Profile />
+            </Flex>
+          </Flex>  
+          {!isWideVersion && <Search />}
+        </Container>
+      </Flex>
+      { asPath !== "/" && <Navbar /> }
+      
+    </>
   )
 }

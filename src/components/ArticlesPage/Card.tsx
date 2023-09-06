@@ -11,7 +11,6 @@ interface CardProps {
     created_at: string;
     author: string;
   }
-  
 }
 
 export const Card = ({data}:CardProps) => {
@@ -63,7 +62,7 @@ export const Card = ({data}:CardProps) => {
               {data.title} 
             </Text>
             <Box as="figure" bg="gray.800" flexGrow="1" maxH="8rem" borderRadius="2">
-              <Image src={data.image} alt={''}/>
+              <img src={data.image} alt={''} />
             </Box>
           </Stack>
           <Flex as="footer" fontSize="12px" justify="space-between">
