@@ -30,7 +30,10 @@ export const Card = ({data}:CardProps) => {
     w:"100%",
     h:"280px",
     maxW:"296px",
-    cursor:"pointer"
+    cursor:"pointer",
+    transition: "all 150ms",
+    transform: "auto",
+    _hover: { scale: 1.05}
   }
   const card_label: BoxProps = {
     bg:"gray.500",
