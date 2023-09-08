@@ -17,7 +17,6 @@ import { api_client } from '@/services/api_client'
 import { AllArticlesResponse, Article, CategoriesResponse } from './article'
 import { useRequest } from '@/context/RequestContext'
 import { useEffect } from 'react'
-import {  useSession } from 'next-auth/react'
 import { getServerSession } from 'next-auth'
 
 import { authOptions } from '../api/auth/[...nextauth]'

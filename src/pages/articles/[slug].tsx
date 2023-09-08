@@ -1,20 +1,19 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Main } from '@/components/Main/index'
-import { Box, Icon, Flex, Heading, Stack, Text, Spinner, UnorderedList, Input, Button, InputProps, ButtonProps } from '@chakra-ui/react'
+import { Flex, Heading, Stack, Spinner, UnorderedList, Input, Button, InputProps, ButtonProps } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
-import { api } from '@/services/api'
 import { useQuery } from "react-query";
-import { HeaderCategoriesPage } from '@/components/CategoriesPage/HeaderCategoriesPage'
-import { Card } from '@/components/CategoriesPage/Card'
-import { CardContainer } from '@/components/CategoriesPage/CardContainer'
-import { useEffect } from 'react'
 import { Articles } from '@/components/Articles'
 import { Comments } from '@/components/Articles/Comments'
 import { api_client } from '@/services/api_client'
 import { ArticleCommentsResponse, ArticlesResponse } from './article'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import {  useSession } from 'next-auth/react'
 
-
+interface CommentsSubmit {
+  text: string;
+}
 
 interface ArticlesPageProps {
     slug: string;
@@ -36,12 +35,35 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
     alignSelf:"flex-start",
     size:"sm"
   }
-  const {data, isLoading, isRefetching} = useQuery('comments', async () => {
+  const {data, isLoading, isRefetching, refetch} = useQuery('comments', async () => {
     const {data} = await api_client.post<ArticleCommentsResponse>("comments/get-article-comments", { slug: articles.slug })
     return {
       comments: data.comments
     }
   })
+  const {data: user} = useSession()
+
+  const { register, handleSubmit, reset } = useForm<CommentsSubmit>()
+  const submit: SubmitHandler<CommentsSubmit> = async (value, event) => {
+    let config = {
+
+    }
+    if(user && "token" in user) {
+      config = {
+        headers: {
+          'Authorization': 'Bearer ' + user.token
+        }
+      }
+    }
+    
+    try {
+      const resp = await api_client.post('/comments', { text: value.text, slug: articles.slug }, config)
+    } catch (error) {
+      console.log(error);
+    }
+    refetch()
+    reset()
+  }
   return (
     <>
       <Head>
@@ -56,8 +78,8 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
               Comentários
             </Heading> 
             <UnorderedList bg="gray.900" borderRadius="md" m="0" px="4" py="4">
-                <Flex as="form" direction="column" py="2">
-                    <Input {...input} placeholder='Escreva seu comentário'/>
+                <Flex as="form" direction="column" py="2" onSubmit={handleSubmit(submit)}>
+                    <Input {...input} {...register('text')} placeholder='Escreva seu comentário'/>
                     <Button type="submit" {...button}>Enviar</Button>
                 </Flex >
                 { (isLoading || isRefetching) && <Spinner />}
@@ -90,13 +112,16 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
     
     return {
         props: {
-            data
+            data,
+            slug
         }
     }
   } catch (err) {
     console.log(err);
     return {
-        props: {}
+        props: {
+          slug
+        }
     }
   }
   

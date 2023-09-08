@@ -72,7 +72,7 @@ export const Navbar = () => {
         </IconButton>
         </> 
         : 
-        categories && categories.map( category => (
+        data && data.map( category => (
             <Navlink href={`${category.category}`} key={category.id}>
               {category.category}
             </Navlink>
