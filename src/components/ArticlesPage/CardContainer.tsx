@@ -12,7 +12,9 @@ interface CardProps {
     title: string;
     image: string;
     created_at: string;
-    author: string;
+    author: {
+      name: string;
+    };
   
 }
 interface CardContainerProps {
@@ -23,11 +25,10 @@ export const CardContainer = ( {articles}: CardContainerProps ) => {
   const [page, setPage ] = useState(1)
   const maxPages = ( articles ) ? Number((articles.length / 3).toFixed())  : 0
 
-  
   return (
-    <Stack spacing="0" >
-        <Pagination page={page} setPage={setPage} maxPages={maxPages}/>
-        <Flex justify="space-around" flexWrap="wrap" gap="4">
+    <Stack spacing="0">
+        {maxPages > 1 && <Pagination page={page} setPage={setPage} maxPages={maxPages}/>}
+        <Flex justify="flex-start" flexWrap="wrap" gap="4"  py="6">
           {articles && articles.slice((page - 1) * 3, page * 3)
           .map(article => (
              <Card data={article}/>

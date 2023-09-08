@@ -1,4 +1,4 @@
-import { Box, Text, Stack, Heading, Flex, StackProps, BoxProps, TextProps } from '@chakra-ui/react'
+import { Box, Text, Stack, Heading, Flex, StackProps, BoxProps, TextProps, Img } from '@chakra-ui/react'
 import React from 'react'
 import Image from '../../../node_modules/next/image'
 import { useRouter } from 'next/router';
@@ -10,7 +10,9 @@ interface CardProps {
     title: string;
     image: string;
     created_at: string;
-    author: string;
+    author: {
+      name: string
+    };
   }
 }
 
@@ -64,13 +66,13 @@ export const Card = ({data}:CardProps) => {
             <Text as="h4" fontSize="md" lineHeight="1.2rem">
               {data.title} 
             </Text>
-            <Box as="figure" bg="gray.800" flexGrow="1" maxH="8rem" borderRadius="2">
-              <img src={data.image} alt={''} />
+            <Box as="figure" bg="gray.800" overflow="hidden" flexGrow="1" maxH="9rem" borderRadius="2">
+              <Img src={data.image} alt={''} objectFit="cover" w="100%" minH="100%"/>
             </Box>
           </Stack>
           <Flex as="footer" fontSize="12px" justify="space-between">
-            <Text>{new Date(data.created_at).toLocaleString([], {  month: 'long', day: 'numeric' })}</Text>
-            <Text>{data.author}</Text>
+            <Text>{data.created_at}</Text>
+            <Text>{data.author.name}</Text>
           </Flex>
         </Stack>
     </Stack>

@@ -14,7 +14,7 @@ import { GetServerSideProps } from 'next'
 import { api } from '@/services/api'
 import { useQuery } from "react-query";
 import { api_client } from '@/services/api_client'
-import { CategoriesResponse } from './article'
+import { AllArticlesResponse, Article, CategoriesResponse } from './article'
 import { useRequest } from '@/context/RequestContext'
 import { useEffect } from 'react'
 import {  useSession } from 'next-auth/react'
@@ -37,33 +37,28 @@ interface IndexProps{
   categories: {
     id: string;
     category: string;
-  }[]
+  }[],
+  articlesFrontEnd: Article[];
+  articlesBackEnd: Article[];
+  articlesMobile: Article[];
+  articlesFullstack: Article[];
+  articlesIA: Article[];
+  articlesDataScience: Article[];
 }
 
-export default function Index({categories}: IndexProps) {
-  const { setCategories } = useRequest()
-  // TODO: transformar em SSR e criar um Context para isso
-  const {data} = useQuery('articles', async () => {
-    const {data} = await api.get<ArticlesResponse[]>("/articles")
-    const articlesFrontEnd = data.filter(article => article.category === "front-end")
-    const articlesBackEnd = data.filter(article => article.category === "back-end")
-    const articlesMobile = data.filter(article => article.category === "mobile")
-    const articlesUx = data.filter(article => article.category.includes("ux"))
-    const articlesIA = data.filter(article => article.category === "inteligencia artificial")
-    const articlesDataScience = data.filter(article => article.category === "data science")
-
-    return {
-      articlesFrontEnd,
-      articlesBackEnd,
-      articlesMobile,
-      articlesUx,
-      articlesIA,
-      articlesDataScience
-    }
-  })
-  const {data: user} = useSession()
-  console.log(user);
+export default function Index({
+  categories, 
+  articlesFrontEnd, 
+  articlesBackEnd,
+  articlesMobile,
+  articlesFullstack,
+  articlesIA,
+  articlesDataScience
+}: IndexProps) {
   
+  const { setCategories } = useRequest()
+  
+
   useEffect(() => {
     setCategories(categories)
   }, [])
@@ -81,68 +76,76 @@ export default function Index({categories}: IndexProps) {
               CATEGORIAS
               <Text as="strong" fontWeight="black" color="purple.700">!</Text>
           </Heading>
-          <Box>
-            <Flex color="purple.300" align="center" gap="2">
-              <Icon as={MdMonitor} fontSize="2.25rem"/>
-              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
-                FRONT-END
-              </Heading>
-            </Flex>
-            <CardContainer articles={data?.articlesFrontEnd}/>
-          </Box>
+          {articlesFrontEnd.length > 0 && 
+            <Box>
+              <Flex color="purple.300" align="center" gap="2">
+                <Icon as={MdMonitor} fontSize="2.25rem"/>
+                <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                  FRONT-END
+                </Heading>
+              </Flex>
+              <CardContainer articles={articlesFrontEnd}/>
+            </Box>
+          }
 
-          <Box>
-            <Flex color="red.500" align="center" gap="2">
-              <Icon as={LuServerCog} fontSize="2.25rem"/>
-              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
-                  BACK-END
-              </Heading>
-            </Flex>
-            <CardContainer articles={data?.articlesBackEnd}/>
+          { articlesBackEnd.length > 0 && 
+            <Box>
+              <Flex color="red.500" align="center" gap="2">
+                <Icon as={LuServerCog} fontSize="2.25rem"/>
+                <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                    BACK-END
+                </Heading>
+              </Flex>
+              <CardContainer articles={articlesBackEnd}/>
 
-          </Box>
+            </Box>
+          }
+          {articlesMobile.length > 0 && 
+            <Box>
+              <Flex color="yellow.500" align="center" gap="2">
+                <Icon as={FaMobileAlt} fontSize="2.25rem"/>
+                <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                    MOBILE
+                </Heading>
+              </Flex>
+              <CardContainer articles={articlesMobile}/>
+            </Box>
+          }
 
-          <Box>
-            <Flex color="yellow.500" align="center" gap="2">
-              <Icon as={FaMobileAlt} fontSize="2.25rem"/>
-              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
-                  MOBILE
-              </Heading>
-            </Flex>
-            <CardContainer articles={data?.articlesMobile}/>
+          { articlesFullstack.length > 90 &&
+            <Box>
+              <Flex color="pink.500" align="center" gap="2">
+                <Icon as={MdColorLens} fontSize="2.5rem"/>
+                <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                    FULLSTACK
+                </Heading>
+              </Flex>
+              <CardContainer articles={articlesFullstack}/>
+            </Box>
+          }
 
-          </Box>
-
-          <Box>
-            <Flex color="pink.500" align="center" gap="2">
-              <Icon as={MdColorLens} fontSize="2.5rem"/>
-              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
-                  UX & UI
-              </Heading>
-            </Flex>
-            <CardContainer articles={data?.articlesUx}/>
-
-          </Box>
-          <Box>
-            <Flex color="blue.500" align="center" gap="2">
-              <Icon as={GiArtificialIntelligence} fontSize="2.5rem"/>
-              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
-                  INTELIGENCIA ARTIFICIAL
-              </Heading>
-            </Flex>
-            <CardContainer articles={data?.articlesIA}/>
-
-          </Box>
-
-          <Box>
-            <Flex color="green.500" align="center" gap="2">
-              <Icon as={TbAtom2Filled} fontSize="2.5rem"/>
-              <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
-                  DATA SCIENCE
-              </Heading>
-            </Flex>
-            <CardContainer articles={data?.articlesDataScience}/>
-          </Box>
+          { articlesIA.length > 0 &&
+            <Box>
+              <Flex color="blue.500" align="center" gap="2">
+                <Icon as={GiArtificialIntelligence} fontSize="2.5rem"/>
+                <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                    INTELIGENCIA ARTIFICIAL
+                </Heading>
+              </Flex>
+              <CardContainer articles={articlesIA}/>
+            </Box>
+          }
+          { articlesDataScience.length > 0 &&
+            <Box>
+              <Flex color="green.500" align="center" gap="2">
+                <Icon as={TbAtom2Filled} fontSize="2.5rem"/>
+                <Heading as="h3"  fontSize="2.25rem" fontFamily="Ubuntu">
+                    DATA SCIENCE
+                </Heading>
+              </Flex>
+              <CardContainer articles={articlesDataScience}/>
+            </Box>
+          }
         </Stack>
       </Main>
     </>
@@ -150,13 +153,34 @@ export default function Index({categories}: IndexProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
-  const {data} = await api_client.get<CategoriesResponse>("categories")
+  const {data: temp} = await api_client.get<CategoriesResponse>("categories")
   const session = await getServerSession(req, res, authOptions);
-  console.log(session);
   
-  return {
-    props: {
-      categories: data.categories
+  try {
+    const { data } = await api_client.get<AllArticlesResponse>("articles/get-all")
+    const articlesFrontEnd = data.articles.filter(article => article.category === "front-end")
+    const articlesBackEnd = data.articles.filter(article => article.category === "back-end")
+    const articlesMobile = data.articles.filter(article => article.category === "mobile")
+    const articlesFullstack = data.articles.filter(article => article.category === "fullstack")
+    const articlesIA = data.articles.filter(article => article.category === "inteligencia artificial")
+    const articlesDataScience = data.articles.filter(article => article.category === "data science")
+    return {
+      props: {
+        articlesFrontEnd,
+        articlesBackEnd,
+        articlesMobile,
+        articlesFullstack,
+        articlesIA,
+        articlesDataScience,
+        categories: temp.categories
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    return {
+        props: {
+          categories: temp.categories
+        }
     }
   }
 }

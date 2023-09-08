@@ -6,7 +6,9 @@
 - [x] fazer as paginas de categoria
 - [x] fazer as paginas de artigos
 - [x] configurar o next auth
-- [x] colocar a session do usuario em um context
-- [] fazer o Get articles by Categories no back-end
+- [x] colocar a session do usuário em um context
+- [x] fazer o Get articles by Categories no back-end
+- [x] pegar todos os artigos
 - [] fazer a criação de comentário
 - [] fazer o delete comment para o author
+

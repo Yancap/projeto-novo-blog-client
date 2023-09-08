@@ -10,11 +10,13 @@ interface CardProps {
     title: string;
     image: string;
     created_at: string;
-    author: string;
+    author: {
+      name: string;
+    };
   
 }
 interface CardContainerProps {
-    articles: CardProps[] | undefined;
+    articles: CardProps[] | null;
 }
 
 export const CardContainer = ( {articles}: CardContainerProps ) => {
@@ -26,14 +28,14 @@ export const CardContainer = ( {articles}: CardContainerProps ) => {
     <Stack spacing="0" >
       {articles ? 
       <>
-        <Pagination page={page} setPage={setPage} maxPages={maxPages}/>
+        {maxPages > 0 && <Pagination page={page} setPage={setPage} maxPages={maxPages}/>}
         <SimpleGrid gap="8" minChildWidth="312px" justifyItems="center">
           {articles && articles.slice((page - 1) * 9, page * 9)
           .map(article => (
              <Card data={article}/>
           ))}
         </SimpleGrid>
-        <Pagination page={page} setPage={setPage} maxPages={maxPages}/>
+        {maxPages > 0 && <Pagination page={page} setPage={setPage} maxPages={maxPages}/>}
       </>
       : <Heading>
           Sem resultados :(

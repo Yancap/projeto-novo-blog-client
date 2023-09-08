@@ -1,10 +1,10 @@
-import { Container, ContainerProps, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, FlexProps, Heading, Icon, IconButton, Stack, useBreakpointValue } from '@chakra-ui/react'
+import { Container, ContainerProps, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, FlexProps, Heading, Icon, IconButton, IconProps, Stack, Text, useBreakpointValue } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { Navlink } from './Navlink'
 import { useQuery } from "react-query";
 import { api } from '@/services/api';
 import { useNavbarDrawer } from '@/context/NavbarDrawerContext';
-import { RiMenuLine } from 'react-icons/ri';
+import { RiHome5Line, RiMenuLine } from 'react-icons/ri';
 import { useRequest } from '@/context/RequestContext';
 import { api_client } from '@/services/api_client';
 import { CategoriesResponse } from '@/pages/articles/article';
@@ -12,14 +12,14 @@ import { CategoriesResponse } from '@/pages/articles/article';
 
 export const Navbar = () => {
 
-  const { asPath } = useRouter() 
+  const router = useRouter() 
   
   const nav: FlexProps = {
     as:"nav",
     bg: "gray.700",
     maxW:"100vw",
     px:{base:4,sm:8,md:10,lg:0},
-    justify:"space-between",
+    align: "center",
   }
   const container: ContainerProps = {
     display:"flex",
@@ -32,11 +32,17 @@ export const Navbar = () => {
     px: {base: 4, lg: 0}
   }
 
-
+  const home: IconProps = {
+    fontSize:"2xl",
+    color:"gray.200",
+    cursor:"pointer",
+    transform:"auto",
+    transition:"all 150ms",
+    _hover:{color:"gray.100",scale: 1.1}
+  }
   // TODO: transformar em SSR e criar um Context para isso
   const {data} = useQuery('categories', async () => {
     const {data} = await api_client.get<CategoriesResponse>("categories")
-    
     return data.categories
   })
   const { isOpen, onClose, onOpen } = useNavbarDrawer()
@@ -50,6 +56,12 @@ export const Navbar = () => {
   return (
     <>
     <Flex {...nav}>
+      
+    {!isDrawerSidebar &&
+      <Flex justify="center" flexGrow="1">
+        <Icon as={RiHome5Line} onClick={() => router.push('/articles')}{...home}/>
+      </Flex>
+    }
       <Container {...container}>
         {isDrawerSidebar ? 
         <>
@@ -60,13 +72,17 @@ export const Navbar = () => {
         </IconButton>
         </> 
         : 
-        data && data.map( category => (
+        categories && categories.map( category => (
             <Navlink href={`${category.category}`} key={category.id}>
               {category.category}
             </Navlink>
           ))
         }
       </Container>
+      {!isDrawerSidebar &&
+      <Flex flexGrow="1">
+      </Flex>
+      }
     </Flex>
     
     <Drawer isOpen={isOpen} placement='left' onClose={onClose}>
@@ -78,6 +94,9 @@ export const Navbar = () => {
                 </DrawerHeader>
                 <DrawerBody>
                 <Stack as="aside" py="8" spacing="12">
+                  <Flex gap="2">
+                    <Icon as={RiHome5Line} onClick={() => router.push('/articles')}{...home}/>
+                  </Flex>
                   {data && data.map( category => (
                     <Navlink href={`${category.category}`} key={category.id}>
                       {category.category}

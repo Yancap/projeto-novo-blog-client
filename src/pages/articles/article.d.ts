@@ -22,6 +22,10 @@ export interface ArticlesResponse {
     articles: Article
 }
 
+export interface AllArticlesResponse {
+    articles: Article[]
+}
+
 export interface ArticleCommentsResponse {
     article: any;
     comments: {

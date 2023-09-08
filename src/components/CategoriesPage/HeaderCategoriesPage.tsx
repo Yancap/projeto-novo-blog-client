@@ -65,7 +65,7 @@ export const HeaderCategoriesPage = ({category}: HeaderCategoriesPageProps) => {
   }
   if(category in info) return (
     <Stack px="10" py="4" spacing="4">
-        <Flex gap="4" align="center">
+        <Flex gap="4" align="center" >
             <Icon as={info[category].icon} color={info[category].color}  fontSize={{ base: "2.5rem", sm: "3rem" }}/>
             <Heading as="h1" fontSize={{ base: "2rem", sm: "2.5rem", "2xl":"3rem" }} fontWeight="black" textTransform="uppercase">
                 {category}

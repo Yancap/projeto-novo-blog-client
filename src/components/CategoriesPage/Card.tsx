@@ -10,7 +10,9 @@ interface CardProps {
     title: string;
     image: string;
     created_at: string;
-    author: string;
+    author: {
+      name: string;
+    };
   }
 }
 
@@ -43,7 +45,7 @@ export const Card = ({data}:CardProps) => {
           </Stack>
           <Flex as="footer" fontSize="12px" justify="space-between">
             <Text>{new Date(data.created_at).toLocaleString([], {  month: 'long', day: 'numeric', year: "numeric" })}</Text>
-            <Text>{data.author}</Text>
+            <Text>{data.author.name}</Text>
           </Flex>
         </Stack>
         

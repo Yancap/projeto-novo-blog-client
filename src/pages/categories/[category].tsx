@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Main } from '@/components/Main/index'
-import { Box, Icon, Flex, Heading, Stack, Text, Spinner } from '@chakra-ui/react'
+import {  Spinner } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { api } from '@/services/api'
 import { useQuery } from "react-query";
@@ -9,35 +8,16 @@ import { HeaderCategoriesPage } from '@/components/CategoriesPage/HeaderCategori
 import { Card } from '@/components/CategoriesPage/Card'
 import { CardContainer } from '@/components/CategoriesPage/CardContainer'
 import { useEffect } from 'react'
+import { api_client } from '@/services/api_client'
+import { Article, ArticlesResponse } from './category'
 
-export interface ArticlesResponse {
-  slug: string;
-  title: string;
-  subtitle: string;
-  text: string;
-  image: string;
-  category: string;
-  author: string;
-  created_at: string;
-  state: string;
-}
 
 interface CategoriesPageProps {
     category: string;
+    articles: Article[] | null;
 }
-export default function Categories({category}: CategoriesPageProps) {
-   
-
-  // TODO: transformar em SSR e criar um Context para isso
-  const {data, isRefetching, refetch} = useQuery('articles', async () => {
-    const {data} = await api.get<ArticlesResponse[]>("/articles")
-    const articles = data.filter(article => article.category === category)
-    return articles
-  })
-  
-  useEffect(() => {
-    refetch()
-  }, [category])  
+export default function Categories({category, articles}: CategoriesPageProps) {
+    
   return (
     <>
       <Head>
@@ -47,9 +27,8 @@ export default function Categories({category}: CategoriesPageProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Main headerComponent={<HeaderCategoriesPage category={category as "front-end"}/>}>
-        { isRefetching ? <Spinner /> : 
-        <CardContainer articles={data}/>
-        }
+        
+        <CardContainer articles={articles}/>
       </Main>
     </>
   )
@@ -58,10 +37,21 @@ export default function Categories({category}: CategoriesPageProps) {
 export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
   const category = params?.category ?? '';
 
-  
-  return {
-    props: {
-        category
+  try {
+    const { data } = await api_client.post<ArticlesResponse>("articles/get-by-category", { category })
+    
+    return {
+        props: {
+          articles: data.articles.length > 0 ? data.articles : null,
+          category
+        }
+    }
+  } catch (err) {
+    console.log(err);
+    return {
+        props: {
+          category
+        }
     }
   }
 }
