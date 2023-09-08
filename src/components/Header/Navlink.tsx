@@ -10,10 +10,12 @@ interface NavlinkProps {
 
 export const Navlink = ({href, children}: NavlinkProps) => {
   const router = useRouter()
+  const path = router.asPath.replace(/%20/g, " ")
+  
   const box: BoxProps = {
     h:"100%",
-    color: router.asPath === href ? "gray.100" : "gray.200",
-    fontWeight: router.asPath === href ? "bold" : "normal",
+    color: path === `/categories/${href}` ? "gray.100" : "gray.200",
+    fontWeight: path === `/categories/${href}` ? "bold" : "normal",
     transition: "all 150ms",
     _hover: {color: "gray.100", fontWeight: "bold"},
     textTransform: "uppercase"

@@ -15,13 +15,6 @@ interface CardProps {
 }
 
 export const Card = ({data}:CardProps) => {
-
-  const color_text_label =  data.category === "front-end" ? "purple.300" : 
-  data.category === "back-end" ? "red.500" : 
-  data.category === "mobile" ? "yellow.500" :
-  data.category === "inteligencia artificial" ? "blue.500" :
-  data.category === "data science" ? "green.500" :
-  "pink.500"
   
   const card: StackProps = {
     bg:"gray.600",
@@ -35,30 +28,10 @@ export const Card = ({data}:CardProps) => {
     transform: "auto",
     _hover: { scale: 1.05}
   }
-  const card_label: BoxProps = {
-    bg:"gray.500",
-    display:"inline-block",
-    borderRadius:"4",
-    px:"2",
-    py:"1",
-    mt:"-.75rem",
-    alignSelf:"flex-end"
-  }
-  const category: TextProps ={
-    color: color_text_label,
-    fontWeight:"bold",
-    fontSize:"sm",
-    textTransform:"uppercase"
-  }
-
   const router = useRouter()
+
   return (
     <Stack {...card} onClick={() => router.push(`/articles/${data.slug}`)}>
-        <Box {...card_label}>
-            <Text {...category}>
-              {data.category}  
-            </Text>
-        </Box>
         <Stack justify="space-between" flexGrow="1" py="4">
           <Stack flexGrow="1" justify="space-between">
             <Text as="h4" fontSize="md" lineHeight="1.2rem">
@@ -69,10 +42,11 @@ export const Card = ({data}:CardProps) => {
             </Box>
           </Stack>
           <Flex as="footer" fontSize="12px" justify="space-between">
-            <Text>{new Date(data.created_at).toLocaleString([], {  month: 'long', day: 'numeric' })}</Text>
+            <Text>{new Date(data.created_at).toLocaleString([], {  month: 'long', day: 'numeric', year: "numeric" })}</Text>
             <Text>{data.author}</Text>
           </Flex>
         </Stack>
+        
     </Stack>
   )
 }

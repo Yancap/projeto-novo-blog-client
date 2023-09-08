@@ -23,13 +23,7 @@ export const CardContainer = ( {articles}: CardContainerProps ) => {
   const [page, setPage ] = useState(1)
   const maxPages = ( articles ) ? Number((articles.length / 3).toFixed())  : 0
 
-  const arrow = {
-    color:"purple.700",
-    fontSize:"4xl",
-    transition: "all 150ms",
-    transform: "auto",
-    _hover: {scale: 1.1}
-  }
+  
   return (
     <Stack spacing="0" >
         <Pagination page={page} setPage={setPage} maxPages={maxPages}/>

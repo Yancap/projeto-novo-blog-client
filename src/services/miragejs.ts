@@ -35,7 +35,7 @@ export function makeServer(){
                 title(i: number) {
                     const categories = ['front-end', 'back-end', 'mobile', 'ux & ui', 'inteligencia artificial', 'data science']
                     
-                    return `Titulo do artigo sobre ${ categories[Math.floor(Math.random() * 5)] } e suas tecnologias ${i + 1}`
+                    return `Titulo do artigo sobre ${ this.category } e suas tecnologias ${i + 1}`
                 },
                 subtitle(i: number) {
                     const categories = ['front-end', 'back-end', 'mobile', 'ux & ui', 'inteligencia artificial', 'data science']

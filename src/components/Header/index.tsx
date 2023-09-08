@@ -7,13 +7,14 @@ import { AiOutlineGithub } from 'react-icons/ai'
 import { useRouter } from 'next/router'
 import { Search } from './Search'
 import { Navbar } from './Navbar'
+import Link from 'next/link'
 
 
 
 
 export const Header = () => {
 
-  const { asPath } = useRouter() 
+  const router = useRouter() 
   
   const header: FlexProps = {
     as:"header",
@@ -46,19 +47,23 @@ export const Header = () => {
   }
   const isWideVersion = useBreakpointValue({
     base: false,
-    md: true,
+    lg: true,
   })
-
+  
   return (
     <>
       <Flex {...header}>
         <Container {...container}>
           <Flex gap="8" w="100%" justify="space-between" align="center">
-            <Flex gap="8"  w="auto">
-              <Image src="/logo.svg" alt='ARTech' width="158" height="30"/>
+            <Flex gap="8"  w="auto" flexGrow="2">
+              
+              <Image src="/logo.svg" alt='ARTech' width="158" height="30" style={{cursor: "pointer"}}  onClick={ () => {
+                router.push(router.asPath === "/articles" ? "/" : "/articles")
+              }}/>
+              
               {isWideVersion && <Search />}
             </Flex>
-            <Flex gap="4" align="center">
+            <Flex gap="4" align="center" flexGrow="1">
               <Flex gap="2" display={{base:"none", sm: "flex"}}>
                 <Icon {...icon} as={RiLinkedinBoxFill}/>
                 <Icon {...icon} as={AiOutlineGithub}/>
@@ -69,7 +74,7 @@ export const Header = () => {
           {!isWideVersion && <Search />}
         </Container>
       </Flex>
-      { asPath !== "/" && <Navbar /> }
+      { router.asPath !== "/" && <Navbar /> }
       
     </>
   )

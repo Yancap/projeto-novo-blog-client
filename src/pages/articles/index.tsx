@@ -13,6 +13,14 @@ import { LuServerCog } from 'react-icons/lu'
 import { GetServerSideProps } from 'next'
 import { api } from '@/services/api'
 import { useQuery } from "react-query";
+import { api_client } from '@/services/api_client'
+import { CategoriesResponse } from './article'
+import { useRequest } from '@/context/RequestContext'
+import { useEffect } from 'react'
+import {  useSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth'
+
+import { authOptions } from '../api/auth/[...nextauth]'
 
 export interface ArticlesResponse {
   slug: string;
@@ -25,10 +33,15 @@ export interface ArticlesResponse {
   created_at: string;
   state: string;
 }
+interface IndexProps{
+  categories: {
+    id: string;
+    category: string;
+  }[]
+}
 
-
-export default function Articles() {
-  
+export default function Index({categories}: IndexProps) {
+  const { setCategories } = useRequest()
   // TODO: transformar em SSR e criar um Context para isso
   const {data} = useQuery('articles', async () => {
     const {data} = await api.get<ArticlesResponse[]>("/articles")
@@ -48,6 +61,12 @@ export default function Articles() {
       articlesDataScience
     }
   })
+  const {data: user} = useSession()
+  console.log(user);
+  
+  useEffect(() => {
+    setCategories(categories)
+  }, [])
   return (
     <>
       <Head>
@@ -131,10 +150,13 @@ export default function Articles() {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
-  
+  const {data} = await api_client.get<CategoriesResponse>("categories")
+  const session = await getServerSession(req, res, authOptions);
+  console.log(session);
   
   return {
     props: {
+      categories: data.categories
     }
   }
 }
