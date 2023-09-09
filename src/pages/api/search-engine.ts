@@ -38,13 +38,12 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const {data} = await api_client.get<AllArticlesResponse>('articles/get-all')
     
     const filtered = data.articles.filter((article: Article) => {
-        return (
-        article.title.toLowerCase().includes(searchCleaner) || 
-        article.subtitle.toLowerCase().includes(searchCleaner) ||
-        article.subtitle.toLowerCase().includes(searchCleaner)|| 
-        article.category.toLowerCase().includes(searchCleaner) ||
-        article.tags.join(' ').toLowerCase().includes(searchCleaner)
-        )
+        if(article.tags.join(' ').toLowerCase().includes(searchCleaner)) return true
+        if(article.author.name.toLowerCase().includes(searchCleaner)) return true
+        if(article.category.toLowerCase().includes(searchCleaner)) return true
+        if(article.title.toLowerCase().includes(searchCleaner)) return true
+        if(article.subtitle.toLowerCase().includes(searchCleaner)) return true
+        return false
     })
     
     response.status(200).json({ articles: filtered })
