@@ -36,6 +36,7 @@ export const theme = extendTheme({
         },
         green: {
             "500": "#62F53B",
+            "400": "#47F58C"
         }
     },
     breakpoints: {

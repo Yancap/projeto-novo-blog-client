@@ -45,9 +45,8 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
 
   const { register, handleSubmit, reset } = useForm<CommentsSubmit>()
   const submit: SubmitHandler<CommentsSubmit> = async (value, event) => {
-    let config = {
-
-    }
+  
+    let config = {}
     if(user && "token" in user) {
       config = {
         headers: {
@@ -64,6 +63,7 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
     refetch()
     reset()
   }
+
   return (
     <>
       <Head>
@@ -84,7 +84,7 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
                 </Flex >
                 { (isLoading || isRefetching) && <Spinner />}
                 {data?.comments && data.comments.map(comment => (
-                    <Comments comment={comment}/>
+                    <Comments comment={comment} refetch={refetch}/>
                 ))}
             </UnorderedList>
         </Stack>

@@ -2,6 +2,7 @@ import { Box, Icon, ListItem, ListItemProps, Text } from '@chakra-ui/react'
 import React from 'react'
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { useSession } from 'next-auth/react'
+import { api_client } from '@/services/api_client';
 
 interface CommentProps {
   comment: {
@@ -10,10 +11,11 @@ interface CommentProps {
     created_at: string; 
     user_name: string;
     user_email: string;
-  }
+  },
+  refetch: any
 }
 
-export const Comments = ({comment}: CommentProps) => {
+export const Comments = ({comment, refetch}: CommentProps) => {
   const listItem: ListItemProps = {
     display:"flex",
     justifyContent: "space-between",
@@ -25,7 +27,24 @@ export const Comments = ({comment}: CommentProps) => {
   }
 
   const {data: user} = useSession()
-
+  async function handleDeleteComment(id: string){
+    let config = {}
+    
+    if(user && "token" in user) {
+      config = {
+        headers: {
+          'Authorization': 'Bearer ' + user.token
+        },
+      data:{ comment_id: id }
+      }
+    }
+    try {
+      await api_client.delete("/comments", config)
+      refetch()
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <ListItem {...listItem}>
         <Box display="flex"_before={{content:'""',borderLeft: "2px",borderColor: "purple.700", py: "1"}}>
@@ -39,7 +58,7 @@ export const Comments = ({comment}: CommentProps) => {
           </Box>
         </Box>
         { comment.user_email === user?.user?.email && //TODO - Fazer o Delete
-        <Box alignSelf="center" cursor="pointer" color="gray.700" transition="all 150ms" _hover={{color: "gray.200"}}>
+        <Box alignSelf="center" cursor="pointer" color="gray.700" transition="all 150ms" _hover={{color: "gray.200"}} onClick={ () => handleDeleteComment(comment.id)}>
           <Icon fontSize="lg" as={RiDeleteBin6Fill}/>
         </Box>
         }

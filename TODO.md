@@ -10,5 +10,5 @@
 - [x] fazer o Get articles by Categories no back-end
 - [x] pegar todos os artigos
 - [x] fazer a criação de comentário
-- [] fazer o delete comment para o author
+- [x] fazer o delete comment para o author
 
