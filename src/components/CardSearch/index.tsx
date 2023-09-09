@@ -1,6 +1,6 @@
 import React from 'react'
 import {  Box, Stack, Text, Flex, Heading,FlexProps } from '@chakra-ui/react'
-import { useRouter } from '../../../node_modules/next/router';
+import { useRouter } from 'next/router';
 
 interface CardSearch {
     article:{
@@ -30,21 +30,22 @@ export const CardSearch = ({article}: CardSearch) => {
     
   return (
     <Flex {...container} onClick={ () => router.push(`/article/${article.slug}`)}>
-        <Box as="figure" h="10rem" maxW="256px" w="100%" bg="gray.800">
-            <img src={article.image} alt={article.slug}/>
+        <Box as="figure" minH="10rem" maxH="12rem" minW="256px">
+            <img src={article.image} alt={article.slug} style={{objectFit: "cover", width: "100%", height:"100%"}}/>
         </Box>
-        <Stack justify="space-between">
-            <Heading fontSize="xl" _after={{content: "'.'", color: "red.500"}}>
+        <Stack justify="space-between" >
+            <Heading fontSize="xl" _after={{content: "'.'", color: "red.500"}} overflow="hidden" display="-webkit-box" style={{WebkitLineClamp:"2", WebkitBoxOrient: "vertical"}}>
                 {article.title}
             </Heading>
             <Flex justify="space-between">
                 <Text fontSize="sm" fontWeight="bold">
                     <Text as="span" fontSize="12px" color="gray.200" fontWeight="normal">por </Text>
+                    {article.author.name}
                 </Text>
                 <Text as="span" fontSize="12px" color="gray.200" fontWeight="normal">{article.created_at}</Text>
             </Flex>
-            <Text fontSize="14px" overflow="hidden" display="-webkit-box" lineClamp="2">
-                {article.text}
+            <Text fontSize="14px" overflow="hidden" display="-webkit-box" style={{WebkitLineClamp:"3", WebkitBoxOrient: "vertical"}} >
+                {article.text.replace(/(<[^>]*>|Texto&nbsp;)/g, "")}
             </Text>
         </Stack>
     </Flex>

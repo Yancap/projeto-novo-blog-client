@@ -34,8 +34,8 @@ export const Search = ({value: outValue}:SearchProps) => {
   const [ value, setValue] = useState(outValue)
   const router = useRouter()
   const { register, handleSubmit, reset } = useForm<SearchForm>()
-  const submit: SubmitHandler<SearchForm> = async (value, event) => {
-    router.push(`/search?search=${value.search}`)
+  const submit: SubmitHandler<SearchForm> = async () => {
+    router.push(`/search?search=${value}`)
   }
   return (
     <Box as="form" w="100%" onSubmit={handleSubmit(submit)}>

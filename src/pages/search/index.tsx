@@ -1,18 +1,18 @@
 import Head from 'next/head'
 import { Main } from '@/components/Main/index'
-import {  Box, Stack, Text, Flex } from '@chakra-ui/react'
+import {  Box, Stack, Text, Flex, Spinner } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 import { api } from '@/services/api'
 import { useQuery } from "react-query";
 import { api_client } from '@/services/api_client'
-import { AllArticlesResponse, Article, CategoriesResponse } from './article'
 import { useEffect } from 'react'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]'
-import { useRouter } from '../../../node_modules/next/router'
+import { useRouter } from 'next/router'
 import { Search } from '@/components/Header/Search'
 import { CardSearch } from '@/components/CardSearch/index'
-import { AllArticlesResponse } from '../article'
+import { AllArticlesResponse } from '../articles/article'
+
 
 export interface ArticlesResponse {
   slug: string;
@@ -31,7 +31,7 @@ interface SearchProps{
 
 export default function SearchPage({}: SearchProps) {
   const router = useRouter()
-  const {data, refetch} = useQuery('categories', async () => {
+  const {data, refetch, isLoading, isRefetching} = useQuery('search-articles', async () => {
     const {data} = await api.post<AllArticlesResponse>('/search-engine', { search: router.query.search})
     
     return data.articles
@@ -50,8 +50,8 @@ export default function SearchPage({}: SearchProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Main>
-        <Stack px="10" spacing="8">
-            <Stack py="10" borderBottom="2px" borderColor="gray.700">
+        <Stack pt="10" pb="8" spacing="8">
+            <Stack py="10" spacing="4" borderBottom="2px" borderColor="gray.700">
                 <Box>
                     <Text as="strong" fontFamily="Poppins" fontWeight="extrabold" _after={{"content": "' - '", fontWeight: "normal"}}>
                         Resultados de
@@ -64,11 +64,11 @@ export default function SearchPage({}: SearchProps) {
                 <Search value={router.query.search}/>
            </Stack>
           <Stack spacing="4">
+            {(isLoading || isRefetching) && <Spinner />}
             {data && data.map(article => (
-                
                 <CardSearch article={article} />
             ))}
-            {/* <CardSearch /> */}
+            {(!data || data.length === 0 ) && <Text> Sem resultados :(</Text>}
           </Stack>
           
         </Stack>
@@ -78,7 +78,6 @@ export default function SearchPage({}: SearchProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
-  const {data: temp} = await api_client.get<CategoriesResponse>("categories")
   const session = await getServerSession(req, res, authOptions);
   
   try {

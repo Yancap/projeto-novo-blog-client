@@ -11,4 +11,4 @@
 - [x] pegar todos os artigos
 - [x] fazer a criação de comentário
 - [x] fazer o delete comment para o author
-
+- [] faze ros artigos

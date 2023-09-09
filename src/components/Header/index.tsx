@@ -61,7 +61,7 @@ export const Header = () => {
                 router.push(router.asPath === "/articles" ? "/" : "/articles")
               }}/>
               
-              {isWideVersion && <Search />}
+              {(isWideVersion && !router.asPath.includes('/search'))  && <Search />}
             </Flex>
             <Flex gap="4" align="center" flexGrow="1">
               <Flex gap="2" display={{base:"none", sm: "flex"}}>
@@ -71,7 +71,7 @@ export const Header = () => {
                 <Profile />
             </Flex>
           </Flex>  
-          {!isWideVersion && <Search />}
+          {(!isWideVersion && !router.asPath.includes('/search')) && <Search />}
         </Container>
       </Flex>
       { router.asPath !== "/" && <Navbar /> }
