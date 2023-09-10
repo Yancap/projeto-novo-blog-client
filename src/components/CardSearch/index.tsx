@@ -23,17 +23,18 @@ export const CardSearch = ({article}: CardSearch) => {
         bg:"gray.900",
         px:"6",
         py:"4",
-        gap:"6"
+        gap:"6",
+        cursor: "pointer"
     }
     const router = useRouter()
     console.log(article);
     
   return (
-    <Flex {...container} onClick={ () => router.push(`/article/${article.slug}`)}>
+    <Flex {...container} onClick={ () => router.push(`/articles/${article.slug}`)}>
         <Box as="figure" minH="10rem" maxH="12rem" minW="256px">
             <img src={article.image} alt={article.slug} style={{objectFit: "cover", width: "100%", height:"100%"}}/>
         </Box>
-        <Stack justify="space-between" >
+        <Stack justify="space-around" >
             <Heading fontSize="xl" _after={{content: "'.'", color: "red.500"}} overflow="hidden" display="-webkit-box" style={{WebkitLineClamp:"2", WebkitBoxOrient: "vertical"}}>
                 {article.title}
             </Heading>

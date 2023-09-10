@@ -17,8 +17,8 @@ interface CardProps {
 }
 
 export const Card = ({data}:CardProps) => {
-
-  const color_text_label =  data.category === "front-end" ? "purple.300" : 
+  
+  const color_text_label = data.category === "front-end" ? "purple.300" : 
   data.category === "back-end" ? "red.500" : 
   data.category === "mobile" ? "yellow.500" :
   data.category === "inteligencia artificial" ? "blue.500" :

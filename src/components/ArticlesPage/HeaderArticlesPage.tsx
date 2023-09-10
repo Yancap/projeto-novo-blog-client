@@ -2,8 +2,13 @@ import { Heading, Stack, Text, Flex } from '@chakra-ui/react'
 import React from 'react'
 import { Card } from './Card'
 import { CardContainer } from './CardContainer'
+import {  Article } from '@/pages/articles/article'
 
-export const HeaderArticlesPage = () => {
+interface HeaderArticlesProps {
+  articles: Article[];
+}
+
+export const HeaderArticlesPage = ({articles}: HeaderArticlesProps) => {
   const data = [
     {
       slug:'teste',
@@ -36,7 +41,7 @@ export const HeaderArticlesPage = () => {
             ARTIGOS DA SEMANA
             <Text as="strong" fontWeight="black" color="purple.700">!</Text>
         </Heading>
-        <CardContainer articles={data} />
+        <CardContainer articles={articles} />
     </Stack>
   )
 }

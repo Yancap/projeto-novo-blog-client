@@ -43,6 +43,7 @@ interface IndexProps{
   articlesFullstack: Article[];
   articlesIA: Article[];
   articlesDataScience: Article[];
+  weekArticles: Article[]
 }
 
 export default function Index({
@@ -52,7 +53,8 @@ export default function Index({
   articlesMobile,
   articlesFullstack,
   articlesIA,
-  articlesDataScience
+  articlesDataScience,
+  weekArticles
 }: IndexProps) {
   
   const { setCategories } = useRequest()
@@ -69,7 +71,7 @@ export default function Index({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Main headerComponent={<HeaderArticlesPage />}>
+      <Main headerComponent={<HeaderArticlesPage articles={weekArticles}/>}>
         <Stack px="10" spacing="8">
           <Heading as="h2" fontSize={{ base: "2.5rem","2xl":"3rem" }}fontWeight="black" mb="4">
               CATEGORIAS
@@ -111,7 +113,7 @@ export default function Index({
             </Box>
           }
 
-          { articlesFullstack.length > 90 &&
+          { articlesFullstack.length > 0 &&
             <Box>
               <Flex color="pink.500" align="center" gap="2">
                 <Icon as={MdColorLens} fontSize="2.5rem"/>
@@ -163,6 +165,7 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
     const articlesFullstack = data.articles.filter(article => article.category === "fullstack")
     const articlesIA = data.articles.filter(article => article.category === "inteligencia artificial")
     const articlesDataScience = data.articles.filter(article => article.category === "data science")
+    const weekArticles = data.articles.slice(0,3)
     return {
       props: {
         articlesFrontEnd,
@@ -171,6 +174,7 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
         articlesFullstack,
         articlesIA,
         articlesDataScience,
+        weekArticles,
         categories: temp.categories
       }
     }

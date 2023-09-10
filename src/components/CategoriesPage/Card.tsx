@@ -35,16 +35,16 @@ export const Card = ({data}:CardProps) => {
   return (
     <Stack {...card} onClick={() => router.push(`/articles/${data.slug}`)}>
         <Stack justify="space-between" flexGrow="1" py="4">
-          <Stack flexGrow="1" justify="space-between">
+          <Stack flexGrow="1" justify="space-around">
             <Text as="h4" fontSize="md" lineHeight="1.2rem">
               {data.title} 
             </Text>
-            <Box as="figure" bg="gray.800" flexGrow="1" maxH="8rem" borderRadius="2">
+            <Box as="figure" bg="gray.800" overflow="hidden" flexGrow="1" maxH="8rem" borderRadius="2">
               <img src={data.image} alt={''} />
             </Box>
           </Stack>
           <Flex as="footer" fontSize="12px" justify="space-between">
-            <Text>{new Date(data.created_at).toLocaleString([], {  month: 'long', day: 'numeric', year: "numeric" })}</Text>
+            <Text>{data.created_at}</Text>
             <Text>{data.author.name}</Text>
           </Flex>
         </Stack>

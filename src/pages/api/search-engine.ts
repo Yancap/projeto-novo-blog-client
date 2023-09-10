@@ -37,6 +37,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
     const {data} = await api_client.get<AllArticlesResponse>('articles/get-all')
     
+    
     const filtered = data.articles.filter((article: Article) => {
         if(article.tags.join(' ').toLowerCase().includes(searchCleaner)) return true
         if(article.author.name.toLowerCase().includes(searchCleaner)) return true
