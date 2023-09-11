@@ -23,8 +23,8 @@ interface CardContainerProps {
 
 export const CardContainer = ( {articles}: CardContainerProps ) => {
   const [page, setPage ] = useState(1)
-  const maxPages = ( articles ) ? Number((articles.length / 3).toFixed())  : 0
-
+  const maxPages = ( articles ) ? Number(Math.ceil(articles.length / 3))  : 0
+  
   return (
     <Stack spacing="0">
         {maxPages > 1 && <Pagination page={page} setPage={setPage} maxPages={maxPages}/>}

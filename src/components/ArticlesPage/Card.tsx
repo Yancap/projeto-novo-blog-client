@@ -30,7 +30,7 @@ export const Card = ({data}:CardProps) => {
     borderRadius:"8",
     px:"4",
     w:"100%",
-    h:"280px",
+    minH:"280px",
     maxW:"296px",
     cursor:"pointer",
     transition: "all 150ms",

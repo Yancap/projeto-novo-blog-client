@@ -35,7 +35,7 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
     alignSelf:"flex-start",
     size:"sm"
   }
-  const {data, isLoading, isRefetching, refetch} = useQuery('comments', async () => {
+  const {data, isLoading, isRefetching, refetch} = useQuery('comments-'+slug, async () => {
     const {data} = await api_client.post<ArticleCommentsResponse>("comments/get-article-comments", { slug: articles.slug })
     return {
       comments: data.comments

@@ -2,6 +2,7 @@ import { Article } from '@/pages/articles/article'
 import { Avatar, Box, Flex, Heading, Link, ListItem, Stack, Text, UnorderedList } from '@chakra-ui/react'
 import Image from 'next/image'
 import React from 'react'
+import styles from './articles.module.css'
 
 interface ArticlesProps {
   article: Article
@@ -33,10 +34,10 @@ export const Articles = ({article}: ArticlesProps) => {
             </Text>
         </Box>
       </Flex>
-      <Box as="figure" mt="2" w="100%" maxH="28rem" bg="black" overflow="hidden" borderRadius="md">
-        <img src={article.image} alt={article.slug}/>
+      <Box as="figure" display="grid" placeItems="center"mt="2" w="100%" maxH="28rem"  overflow="hidden" borderRadius="md">
+        <img src={article.image} alt={article.slug} style={{objectFit: "cover", maxWidth: "100%", height: "auto", minHeight: "20rem", borderRadius: ".5rem"}}/>
       </Box>
-      <Box py="8" borderBottom="2px" borderColor="gray.500" dangerouslySetInnerHTML={{__html: article.text}}>
+      <Box className={styles.text} py="8" borderBottom="2px" borderColor="gray.500" dangerouslySetInnerHTML={{__html: article.text}}>
         
       </Box>
       <Box py="8">

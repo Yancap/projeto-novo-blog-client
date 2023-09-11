@@ -21,21 +21,21 @@ interface CardContainerProps {
 
 export const CardContainer = ( {articles}: CardContainerProps ) => {
   const [page, setPage ] = useState(1)
-  const maxPages = ( articles ) ? Number((articles.length / 9).toFixed()) : 0
+  const maxPages = ( articles ) ? Number(Math.ceil(articles.length / 9)) : 0
 
   
   return (
     <Stack spacing="0" >
       {articles ? 
       <>
-        {maxPages > 0 && <Pagination page={page} setPage={setPage} maxPages={maxPages}/>}
+        {maxPages > 1 && <Pagination page={page} setPage={setPage} maxPages={maxPages}/>}
         <SimpleGrid gap="8" minChildWidth="312px" justifyItems="center">
           {articles && articles.slice((page - 1) * 9, page * 9)
           .map(article => (
              <Card data={article}/>
           ))}
         </SimpleGrid>
-        {maxPages > 0 && <Pagination page={page} setPage={setPage} maxPages={maxPages}/>}
+        {maxPages > 1 && <Pagination page={page} setPage={setPage} maxPages={maxPages}/>}
       </>
       : <Heading>
           Sem resultados :(
