@@ -158,7 +158,7 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
   const session = await getServerSession(req, res, authOptions);
   
   try {
-    const { data } = await api_client.get<AllArticlesResponse>("articles/get-all")
+    const { data } = await api_client.get<AllArticlesResponse>("articles/")
     const articlesFrontEnd = data.articles.filter(article => article.category === "front-end")
     const articlesBackEnd = data.articles.filter(article => article.category === "back-end")
     const articlesMobile = data.articles.filter(article => article.category === "mobile")

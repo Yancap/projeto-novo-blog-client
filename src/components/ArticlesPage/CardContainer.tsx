@@ -31,7 +31,7 @@ export const CardContainer = ( {articles}: CardContainerProps ) => {
         <Flex justify="flex-start" flexWrap="wrap" gap="4"  py="6">
           {articles && articles.slice((page - 1) * 3, page * 3)
           .map(article => (
-             <Card data={article}/>
+             <Card key={article.slug} data={article}/>
           ))}
         </Flex>
     </Stack>

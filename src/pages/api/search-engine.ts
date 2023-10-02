@@ -35,7 +35,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const { search } = registerBodySchema.parse(request.body)
     const searchCleaner = searchClean(search)
 
-    const {data} = await api_client.get<AllArticlesResponse>('articles/get-all')
+    const {data} = await api_client.get<AllArticlesResponse>('articles/')
     
     
     const filtered = data.articles.filter((article: Article) => {

@@ -36,7 +36,7 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
     size:"sm"
   }
   const {data, isLoading, isRefetching, refetch} = useQuery('comments-'+slug, async () => {
-    const {data} = await api_client.post<ArticleCommentsResponse>("comments/get-article-comments", { slug: articles.slug })
+    const {data} = await api_client.get<ArticleCommentsResponse>("comments/from-articles?slug="+articles.slug)
     return {
       comments: data.comments
     }
@@ -54,6 +54,7 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
         }
       }
     }
+    console.log(user);
     
     try {
       const resp = await api_client.post('/comments', { text: value.text, slug: articles.slug }, config)
@@ -84,7 +85,7 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
                 </Flex >
                 { (isLoading || isRefetching) && <Spinner />}
                 {data?.comments && data.comments.map(comment => (
-                    <Comments comment={comment} refetch={refetch}/>
+                    <Comments key={comment.id} comment={comment} refetch={refetch}/>
                 ))}
             </UnorderedList>
         </Stack>
@@ -99,7 +100,7 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
   const slug = params?.slug ?? '';
   
   try {
-    const { data } = await api_client.post<ArticlesResponse>("articles/get", { slug: slug })
+    const { data } = await api_client.get<ArticlesResponse>("articles/by/" + slug)
     
     if(!data.articles) {
         return {

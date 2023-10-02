@@ -16,7 +16,7 @@ export const authOptions: AuthOptions = {
         const email = session.user?.email ?? null
         if(email) {
             try {
-                const {data} = await api_client.post('users/get-by-email', { email })
+                const {data} = await api_client.get('users/'+email)
                 
                 return {
                     ...session,

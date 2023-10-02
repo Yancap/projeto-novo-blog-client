@@ -12,3 +12,8 @@
 - [x] fazer a criação de comentário
 - [x] fazer o delete comment para o author
 - [] faze ros artigos
+
+### Refatoração das requisições
+[x] - pagina de artigos
+[x] - pagina de artigos slug
+[x] - next auth
