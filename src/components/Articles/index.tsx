@@ -46,7 +46,7 @@ export const Articles = ({article}: ArticlesProps) => {
         </Heading>
         <UnorderedList pl="4">
           {article.credits.map(credit => (
-            <ListItem>
+            <ListItem key={credit.name}>
               {credit.name}: <Link href={credit.link} color="blue.500">{credit.link}</Link>
             </ListItem>
           ))}

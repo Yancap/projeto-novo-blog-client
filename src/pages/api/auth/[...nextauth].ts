@@ -10,19 +10,21 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GITGUB_CLIENT_SECRET as string
     }),
   ],
-  secret: process.env.NEXT_PUBLIC_SECRET,
+  secret: process.env.NEXT_AUTH_SECRET,
   callbacks: {
     async session({session}) {
         const email = session.user?.email ?? null
         if(email) {
             try {
                 const {data} = await api_client.get('users/'+email)
-                
                 return {
                     ...session,
                     token: data.user.token
                 }
-            } catch (error) { }
+            } catch (error) { 
+              console.log(error);
+              
+            }
         }
         return {
             ...session

@@ -35,7 +35,8 @@ export const Header = () => {
     w:"100%",
     maxW:{lg: 992, xl: 1024,'2xl': 1280},
     py:"6",
-    px: {base: 4, lg: 0}
+    px: {base: 4, lg: 0},
+   
   }
   const icon = {
     color:"gray.700",
@@ -63,12 +64,12 @@ export const Header = () => {
               
               {(isWideVersion && !router.asPath.includes('/search'))  && <Search />}
             </Flex>
-            <Flex gap="4" align="center" flexGrow="1">
+            <Flex gap="4" align="center" flexGrow="1"  justify="flex-end">
               <Flex gap="2" display={{base:"none", sm: "flex"}}>
                 <Icon {...icon} as={RiLinkedinBoxFill}/>
                 <Icon {...icon} as={AiOutlineGithub}/>
               </Flex>
-                <Profile />
+              <Profile />
             </Flex>
           </Flex>  
           {(!isWideVersion && !router.asPath.includes('/search')) && <Search />}

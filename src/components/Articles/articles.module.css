@@ -1,18 +1,22 @@
 .text p{
-    color: #c7c7df;
+    color: #b0b0c3;
 }
 
 .text strong{
-    color: white;
+    color: #eaeaf6;
     margin-bottom: .75rem;
 }
 
-.text i, .text em{
-    color: #E0DFFB;
+.text i, .text em, .text li{
+    color: #cecde8;
+}
+
+.text li{
+    margin-bottom: .05rem;
 }
 
 .text ul, .text ol {
     padding-left: 1rem;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
 }

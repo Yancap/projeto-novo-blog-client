@@ -4,15 +4,12 @@ import { Main } from '@/components/Main/index'
 import { Box, Icon, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import { HeaderArticlesPage } from '@/components/ArticlesPage/HeaderArticlesPage'
 import { CardContainer } from '@/components/ArticlesPage/CardContainer'
-import { Card } from '@/components/ArticlesPage/Card'
 import { MdMonitor, MdColorLens } from 'react-icons/md'
 import { TbAtom2Filled } from 'react-icons/tb'
 import { FaMobileAlt } from 'react-icons/fa'
 import { GiArtificialIntelligence } from 'react-icons/gi'
 import { LuServerCog } from 'react-icons/lu'
 import { GetServerSideProps } from 'next'
-import { api } from '@/services/api'
-import { useQuery } from "react-query";
 import { api_client } from '@/services/api_client'
 import { AllArticlesResponse, Article, CategoriesResponse } from './article'
 import { useRequest } from '@/context/RequestContext'
@@ -58,7 +55,6 @@ export default function Index({
 }: IndexProps) {
   
   const { setCategories } = useRequest()
-  
 
   useEffect(() => {
     setCategories(categories)

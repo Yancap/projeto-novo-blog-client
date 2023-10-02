@@ -27,9 +27,9 @@ export const Profile = () => {
     _hover: {scale: 1.05, color:"gray.300"}
   }
   const {data: session} = useSession()
-
+  
   return (
-    <Flex gap={{base: "8", xl:"8"}} justify="space-between" flexGrow="1" align="center">
+    <Flex gap={{base: "8", xl:"8"}} justify="space-between" flexGrow="" align="center">
         
         { !session ?
         <Flex align="center" gap="2" borderLeft="2px" borderColor="gray.900" pl="3" cursor="pointer" onClick={() => {signIn('github')}}>

@@ -54,7 +54,6 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
         }
       }
     }
-    console.log(user);
     
     try {
       const resp = await api_client.post('/comments', { text: value.text, slug: articles.slug }, config)
