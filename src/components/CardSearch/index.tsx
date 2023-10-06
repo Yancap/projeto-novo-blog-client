@@ -27,7 +27,6 @@ export const CardSearch = ({article}: CardSearch) => {
         cursor: "pointer"
     }
     const router = useRouter()
-    console.log(article);
     
   return (
     <Flex {...container} onClick={ () => router.push(`/articles/${article.slug}`)}>

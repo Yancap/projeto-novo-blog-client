@@ -1,5 +1,5 @@
 import { Heading, Stack, Text, Flex, Icon } from '@chakra-ui/react'
-import { MdMonitor, MdColorLens } from 'react-icons/md'
+import { MdMonitor } from 'react-icons/md'
 import { TbAtom2Filled } from 'react-icons/tb'
 import { FaMobileAlt } from 'react-icons/fa'
 import { GiArtificialIntelligence } from 'react-icons/gi'
@@ -77,4 +77,6 @@ export const HeaderCategoriesPage = ({category}: HeaderCategoriesPageProps) => {
         </Text>
     </Stack>
   )
+
+  return null
 }

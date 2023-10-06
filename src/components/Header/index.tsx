@@ -66,8 +66,8 @@ export const Header = () => {
             </Flex>
             <Flex gap="4" align="center" flexGrow="1"  justify="flex-end">
               <Flex gap="2" display={{base:"none", sm: "flex"}}>
-                <Icon {...icon} as={RiLinkedinBoxFill}/>
-                <Icon {...icon} as={AiOutlineGithub}/>
+                <Icon {...icon} as={RiLinkedinBoxFill} onClick={() => window.open("https://www.linkedin.com/in/yangabriel/", "_blank")}/>
+                <Icon {...icon} as={AiOutlineGithub} onClick={() => window.open("https://github.com/Yancap", "_blank")}/>
               </Flex>
               <Profile />
             </Flex>

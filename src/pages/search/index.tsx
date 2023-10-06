@@ -33,13 +33,11 @@ export default function SearchPage({}: SearchProps) {
   const router = useRouter()
   const {data, refetch, isLoading, isRefetching} = useQuery('search-articles', async () => {
     const {data} = await api.post<AllArticlesResponse>('/search-engine', { search: router.query.search})
-    
     return data.articles
   })
   useEffect(() => {
       refetch()
   }, [router])
-  console.log(data);
 
   return (
     <>

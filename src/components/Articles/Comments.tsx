@@ -33,13 +33,12 @@ export const Comments = ({comment, refetch}: CommentProps) => {
     if(user && "token" in user) {
       config = {
         headers: {
-          'Authorization': 'Bearer ' + user.token
-        },
-      data:{ comment_id: id }
+          'Authorization': 'Bearer ' + (user as {token: string}).token
+        }
       }
     }
     try {
-      await api_client.delete("/comments", config)
+      await api_client.delete("/comments/" + id, config)
       refetch()
     } catch (error) {
       console.log(error);

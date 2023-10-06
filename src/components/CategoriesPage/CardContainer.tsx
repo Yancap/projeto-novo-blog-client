@@ -32,7 +32,7 @@ export const CardContainer = ( {articles}: CardContainerProps ) => {
         <SimpleGrid gap="8" minChildWidth="312px" justifyItems="center">
           {articles && articles.slice((page - 1) * 9, page * 9)
           .map(article => (
-             <Card data={article}/>
+             <Card key={article.slug} data={article}/>
           ))}
         </SimpleGrid>
         {maxPages > 1 && <Pagination page={page} setPage={setPage} maxPages={maxPages}/>}

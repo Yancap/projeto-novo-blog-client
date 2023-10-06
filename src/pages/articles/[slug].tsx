@@ -50,7 +50,7 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
     if(user && "token" in user) {
       config = {
         headers: {
-          'Authorization': 'Bearer ' + user.token
+          'Authorization': 'Bearer ' + (user as {token: string}).token
         }
       }
     }

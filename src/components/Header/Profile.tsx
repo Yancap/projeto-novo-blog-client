@@ -4,8 +4,6 @@ import { BiMessageDetail } from 'react-icons/bi'
 import { FaStar } from 'react-icons/fa'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
-
-
 export const Profile = () => {
   //const { profile } = useManagement()
 
@@ -40,10 +38,6 @@ export const Profile = () => {
         </Flex>
         : 
         <>
-          <Flex {...notification_container} >
-            <Icon as={BiMessageDetail}  {...notification_icon}/>
-            <Icon as={FaStar} {...notification_icon} />
-          </Flex>
           <Flex align="center" gap="2" onClick={() => {signOut()}}>
             <Box display={{base: "none",md: "block"}} textAlign="end">
               <Text fontSize={{base: "sm", xl:"md"}}>
