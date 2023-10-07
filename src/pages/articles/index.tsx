@@ -14,9 +14,6 @@ import { api_client } from '@/services/api_client'
 import { AllArticlesResponse, Article, CategoriesResponse } from './article'
 import { useRequest } from '@/context/RequestContext'
 import { useEffect } from 'react'
-import { getServerSession } from 'next-auth'
-
-import { authOptions } from '../api/auth/[...nextauth]'
 
 export interface ArticlesResponse {
   slug: string;
@@ -151,7 +148,6 @@ export default function Index({
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
   const {data: temp} = await api_client.get<CategoriesResponse>("categories")
-  const session = await getServerSession(req, res, authOptions);
   
   try {
     const { data } = await api_client.get<AllArticlesResponse>("articles/")

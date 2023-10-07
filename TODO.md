@@ -1,19 +1,25 @@
-# TODO
-- [x] Fazer a NavBar
-- [x] Fazer o mirageJS
-- [x] Configurar a Navbar automaticamente
+# Projeto ARTech
 
-- [x] fazer as paginas de categoria
-- [x] fazer as paginas de artigos
-- [x] configurar o next auth
-- [x] colocar a session do usuário em um context
-- [x] fazer o Get articles by Categories no back-end
-- [x] pegar todos os artigos
-- [x] fazer a criação de comentário
-- [x] fazer o delete comment para o author
-- [x] faze ros artigos
+Esse é um projeto fullstack, onde desenvolvi sozinho: 
 
-### Refatoração das requisições
-[x] - pagina de artigos
-[x] - pagina de artigos slug
-[x] - next auth
+  * - **Design das páginas**
+  * - **Modelagem do banco de dados**
+  * - **Servidor Back-end e API**
+  * - **Página de CMS (Content Manager System)**
+  * - **Página de Artigos**
+
+### Tecnologias Utilizadas
+
+# Página de Artigos ARTech
+
+O Objetivo desse projeto foi de fazer uma página de artigos de tecnologias, :
+
+  - Ler artigos;
+  - Pesquisar por meio títulos, tags, autores e categorias; 
+  - autenticar-se via GitHub;
+  - Comentar e excluir seus próprios comentários;
+  - Paginar os artigos;
+  - Ver artigos por categoria
+
+
+
