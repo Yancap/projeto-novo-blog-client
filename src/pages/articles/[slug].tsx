@@ -35,7 +35,7 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
     alignSelf:"flex-start",
     size:"sm"
   }
-  const {data, isLoading, isRefetching, refetch} = useQuery('comments-'+slug, async () => {
+  const {data, isLoading, isRefetching, refetch, isFetching} = useQuery('comments-'+slug, async () => {
     const {data} = await api_client.get<ArticleCommentsResponse>("comments/from-articles?slug="+articles.slug)
     return {
       comments: data.comments
@@ -80,9 +80,11 @@ export default function ArticlesPage({slug, data: {articles}}: ArticlesPageProps
             <UnorderedList bg="gray.900" borderRadius="md" m="0" px="4" py="4">
                 <Flex as="form" direction="column" py="2" onSubmit={handleSubmit(submit)}>
                     <Input {...input} {...register('text')} placeholder='Escreva seu comentário'/>
-                    <Button type="submit" {...button}>Enviar</Button>
+                    <Button type="submit" {...button} disabled={isFetching}>
+                      {isFetching ? <Spinner /> : 'Enviar'}
+                    </Button>
                 </Flex >
-                { (isLoading || isRefetching) && <Spinner />}
+                { (isLoading ) && <Spinner />}
                 {data?.comments && data.comments.map(comment => (
                     <Comments key={comment.id} comment={comment} refetch={refetch}/>
                 ))}

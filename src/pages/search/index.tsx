@@ -62,10 +62,11 @@ export default function SearchPage({}: SearchProps) {
                 <Search value={router.query.search}/>
            </Stack>
           <Stack spacing="4">
-            {(isLoading || isRefetching) && <Spinner />}
-            {data && data.map(article => (
+            {(isLoading || isRefetching) ? <Spinner /> :
+            data && data.map(article => (
                 <CardSearch article={article} key={article.slug}/>
-            ))}
+            ))
+          }
             {(!data || data.length === 0 ) && <Text> Sem resultados :(</Text>}
           </Stack>
           
