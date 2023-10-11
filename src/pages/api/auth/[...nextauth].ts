@@ -10,7 +10,7 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string
     }),
   ],
-  secret: process.env.NEXT_AUTH_SECRET,
+  secret: process.env.NEXT_PUBLIC_SECRET,
   callbacks: {
     async session({session}) {
         const email = session.user?.email ?? null
