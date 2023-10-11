@@ -10,7 +10,7 @@ Esse é um projeto fullstack, onde desenvolvi sozinho:
 
 # Página de Artigos ARTech
 
-URL: <>
+URL: https://artechblog.netlify.app/
 
 O Objetivo desse projeto foi de fazer uma página de artigos de tecnologias, :
 
